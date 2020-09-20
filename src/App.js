@@ -4,9 +4,9 @@ import { CloseCircleTwoTone } from "@ant-design/icons";
 import CanvasJSReact from "./canvasjs.react";
 import "./App.css";
 
-// const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+// 单个折线图显示的数据个数
 const DATA_COUNT = 80;
 
 class App extends Component {
@@ -25,10 +25,6 @@ class App extends Component {
     };
     this.ws = null;
     this.connected = false;
-  }
-
-  componentDidMount() {
-    // this.initWebSocket();
   }
 
   componentWillUnmount() {
@@ -146,9 +142,9 @@ class App extends Component {
       options.push({
         title: {
           text: `topic: ${key} | 第${count}个 | 当前RFID: ${rfid}`,
-          fontSize: 32,
+          fontSize: 20,
         },
-        height: 600,
+        // height: 600,
         axisX: {
           title: "TIMESTAMP",
         },
@@ -202,12 +198,13 @@ class App extends Component {
             停止
           </Button>
         </div>
-
-        {datas.map((item, index) => (
-          <div style={{ marginBottom: 16 }}>
-            <CanvasJSChart options={options[index]} key={item.key} />
-          </div>
-        ))}
+        <div className="chart-container">
+          {datas.map((item, index) => (
+            <div className="chart-wrapper" key={item + index}>
+              <CanvasJSChart options={options[index]} key={item.key} />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

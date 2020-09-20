@@ -55,3 +55,13 @@ ul {
 }
 
 
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.chart-wrapper {
+   margin: 30 16;
+   width: 50%;
+}
+
