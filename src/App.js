@@ -4,6 +4,7 @@ import { CloseCircleTwoTone } from "@ant-design/icons";
 import CanvasJSReact from "./canvasjs.react";
 import "./App.css";
 
+// CanvasJs 参考文档：https://canvasjs.com/react-charts/
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 // 单个折线图显示的数据个数
@@ -49,11 +50,13 @@ class App extends Component {
       params = params.substr(1);
 
       this.setState({ data: [], count: 0 });
+      // window.ws是在 public/static/config.js文件里定义的，
+      // 目的是为了编译后，随时调整banseUrl
       const G = window.ws;
       let baseUrl = G ? G.wsUrl : "ws://tencent.guohuasun.com:9002";
-      let url = `${baseUrl}/?${params}`;
 
-      this.ws = new WebSocket(url);
+      // 建立websocket连接
+      this.ws = new WebSocket(`${baseUrl}/?${params}`);
       this.ws.onopen = (evt) => {
         this.connected = true;
         this.ws.send("Hello WebSockets!");
@@ -61,6 +64,7 @@ class App extends Component {
 
       this.ws.onmessage = (evt) => {
         let { datas } = this.state;
+        // 接收websocket数据后，进行处理
         datas.map((item) => {
           let { data = [], count = 0, key, total = 0 } = item;
           let len = data.length;
